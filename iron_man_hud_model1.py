@@ -67,3 +67,39 @@ def addText(added_image, x,level_str):
 
     added_image = np.array(img_pil)
     return added_image, x+10, level_str
+
+# create an overlay image. You can use any image
+foreground = cv2.imread('./JARVIS.png')
+foreground = cv2.resize(foreground, (1920,1080))
+# Open the camera
+# cap = cv2.VideoCapture('http://192.168.0.102:8080/video')
+cap = cv2.VideoCapture(0)
+# Set initial value of weights)
+alpha = 0.4
+#mixer.init()
+#mixer.music.load('jarvis_sound.mp3')
+#mixer.music.play()
+x = 0
+count=0
+level_str = ""
+while True:
+    # read the background
+    ret, background = cap.read()
+    background = cv2.flip(background,1)
+    background = cv2.resize(background, (1920,1080))
+    
+    # Select the region in the background where we want to add the image and add the images using cv2.addWeighted()
+    added_image = cv2.addWeighted(background,1,foreground,1,0)
+
+    # Add Text
+    added_image, x,level_str = addText(added_image, x,level_str)
+
+    # Change the region with the result
+    cv2.imshow('frame1',added_image)
+    k = cv2.waitKey(10)
+    # Press q to break
+    if k == ord('q'):
+        break
+# Release the camera and destroy all windows         
+cap.release()
+cv2.destroyAllWindows()
