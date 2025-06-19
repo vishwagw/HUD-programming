@@ -66,4 +66,67 @@
             border-radius: 4px;
         }
     </style>
+</head>
+        <body class="bg-black">
+    <div class="relative w-full h-screen">
+        <video id="droneVideo" autoplay playsinline muted></video>
+        <div class="hud-overlay">
+            <div class="telemetry absolute top-4 left-4 text-sm">
+                <p>Altitude: <span id="altitude">0</span> m</p>
+                <p>Speed: <span id="speed">0</span> km/h</p>
+                <p>Battery: <span id="battery">100</span>%</p>
+                <p>GPS: <span id="gps">0.000, 0.000</span></p>
+            </div>
+            <div class="telemetry absolute top-4 right-4 text-sm">
+                <p>Roll: <span id="roll">0</span>°</p>
+                <p>Pitch: <span id="pitch">0</span>°</p>
+                <p>Yaw: <span id="yaw">0</span>°</p>
+            </div>
+            <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center">
+                <svg width="100" height="100" viewBox="-50 -50 100 100" class="opacity-70">
+                    <circle cx="0" cy="0" r="40" fill="none" stroke="#00ff00" stroke-width="2"/>
+                    <line x1="-10" y1="0" x2="10" y2="0" stroke="#00ff00" stroke-width="2"/>
+                    <line x1="0" y1="-10" x2="0" y2="10" stroke="#00ff00" stroke-width="2"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulated WebRTC or video stream setup
+        const video = document.getElementById('droneVideo');
+        // Replace with actual WebRTC stream or video source URL
+        video.src = 'https://www.w3schools.com/html/mov_bbb.mp4'; // Placeholder video
+
+        // Simulated telemetry data update
+        function updateTelemetry() {
+            const altitude = (Math.random() * 100).toFixed(1);
+            const speed = (Math.random() * 50).toFixed(1);
+            const battery = (Math.random() * 100).toFixed(0);
+            const gps = `${(Math.random() * 180 - 90).toFixed(3)}, ${(Math.random() * 360 - 180).toFixed(3)}`;
+            const roll = (Math.random() * 360).toFixed(1);
+            const pitch = (Math.random() * 180 - 90).toFixed(1);
+            const yaw = (Math.random() * 360).toFixed(1);
+
+            document.getElementById('altitude').textContent = altitude;
+            document.getElementById('speed').textContent = speed;
+            document.getElementById('battery').textContent = battery;
+            document.getElementById('gps').textContent = gps;
+            document.getElementById('roll').textContent = roll;
+            document.getElementById('pitch').textContent = pitch;
+            document.getElementById('yaw').textContent = yaw;
+        }
+
+        // Update telemetry every second
+        setInterval(updateTelemetry, 1000);
+
+        // Handle video stream errors
+        video.onerror = () => {
+            console.error('Error loading video stream');
+            alert('Failed to load drone camera feed. Please check the stream source.');
+        };
+    </script>
+</body>
+</html>
+
     
